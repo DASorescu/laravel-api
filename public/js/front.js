@@ -1912,11 +1912,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _posts_PostsList_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./posts/PostsList.vue */ "./resources/js/components/posts/PostsList.vue");
 
 
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "App",
   components: {
     AppHeader: _AppHeader__WEBPACK_IMPORTED_MODULE_0__["default"],
-    PostList: _posts_PostsList_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
+    PostList: _posts_PostsList_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
+    PostsList: _posts_PostsList_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
   },
   data: function data() {
     return {
@@ -1957,12 +1959,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'PostsCard',
   props: {
-    posts: Array
+    post: Object
   },
-  data: function data() {
-    return {
-      posts: []
-    };
+  computed: {
+    publishedAt: function publishedAt() {
+      var postDate = new Date(this.post.created_at);
+      var day = postDate.getDate();
+      var month = postDate.getMonth() + 1;
+      var year = postDate.getFullYear();
+      if (day < 10) day = "0" + day;
+      if (month < 10) month = "0" + month;
+      return "".concat(day, "/").concat(month, "/").concat(year);
+    }
   }
 });
 
@@ -1977,17 +1985,36 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _PostCard__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./PostCard */ "./resources/js/components/posts/PostCard.vue");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _PostCard__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./PostCard */ "./resources/js/components/posts/PostCard.vue");
+
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'PostsList',
   components: {
-    PostCard: _PostCard__WEBPACK_IMPORTED_MODULE_0__["default"]
+    PostCard: _PostCard__WEBPACK_IMPORTED_MODULE_1__["default"]
   },
   data: function data() {
     return {
       posts: []
     };
+  },
+  methods: {
+    fetchPosts: function fetchPosts() {
+      var _this = this;
+
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('http://localhost:8000/api/posts').then(function (res) {
+        _this.posts = res.data;
+      })["catch"](function (err) {
+        console.error(err);
+      }).then(function () {
+        console.info("Chiamata Terminata");
+      });
+    }
+  },
+  mounted: function mounted() {
+    this.fetchPosts();
   }
 });
 
@@ -2014,17 +2041,12 @@ var render = function render() {
     attrs: {
       title: _vm.title
     }
-  }), _vm._v(" "), _vm._m(0)], 1);
+  }), _vm._v(" "), _c("main", {
+    staticClass: "container mt-3"
+  }, [_c("ul", [_c("PostsList")], 1)])], 1);
 };
 
-var staticRenderFns = [function () {
-  var _vm = this,
-      _c = _vm._self._c;
-
-  return _c("main", {
-    staticClass: "container mt-3"
-  }, [_c("ul")]);
-}];
+var staticRenderFns = [];
 render._withStripped = true;
 
 
@@ -2110,10 +2132,16 @@ var render = function render() {
       _c = _vm._self._c;
 
   return _c("div", {
-    attrs: {
-      id: "post-card"
-    }
-  });
+    staticClass: "card border-primary mb-3"
+  }, [_c("div", {
+    staticClass: "card-body"
+  }, [_c("h5", {
+    staticClass: "card-title"
+  }, [_vm._v(_vm._s(_vm.post.title))]), _vm._v(" "), _c("h6", {
+    staticClass: "card-subtitle mb-2 text-muted"
+  }, [_vm._v(_vm._s(_vm.publishedAt))]), _vm._v(" "), _c("p", {
+    staticClass: "card-text"
+  }, [_vm._v(_vm._s(_vm.post.content))])])]);
 };
 
 var staticRenderFns = [];
@@ -2141,15 +2169,14 @@ var render = function render() {
     attrs: {
       id: "post-list"
     }
-  }, [_c("h2", [_vm._v("Posts")]), _vm._v(" "), _vm.posts.length ? _c("ul", _vm._l(_vm.posts, function (post) {
-    return _c("li", {
-      key: post.id
-    }, [_c("PostCard", {
+  }, [_c("h2", [_vm._v("Posts")]), _vm._v(" "), _vm.posts.length ? _c("div", _vm._l(_vm.posts, function (post) {
+    return _c("PostCard", {
+      key: post.id,
       attrs: {
         post: post
       }
-    })], 1);
-  }), 0) : _c("h5", [_vm._v("Nessun Post")])]);
+    });
+  }), 1) : _c("h5", [_vm._v("Nessun Post")])]);
 };
 
 var staticRenderFns = [];
