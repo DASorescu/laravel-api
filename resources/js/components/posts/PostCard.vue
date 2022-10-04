@@ -2,11 +2,23 @@
     <div class="card border-primary mb-3">
         <div class="card-body">
             <h5 class="card-title">{{post.title}}</h5>
-            <h6 class="card-subtitle mb-2 text-muted">{{publishedAt}}</h6>
+            <p class="card-subtitle mb-2 text-muted">Pubblicato il:<strong class="mx-1">{{publishedAt}}</strong></p>
+            <p class="card-subtitle mb-2 text-muted">Da:<strong class="mx-1">{{post.user.name}}</strong></p>
             <p class="card-text">{{post.content}}</p>
             <!-- <a href="#" class="card-link">Card link</a>
-                <a href="#" class="card-link">Another link</a> -->
-        </div>
+                                                <a href="#" class="card-link">Another link</a> -->
+            </div>
+            <div class="card-footer d-flex justify-content-between align-items-center bg-info">
+                <span class="badge-pill" :class="`badge-${post.category ? post.category.color : 'light'}`">
+                    {{post.category ? post.category.label : "Nessuna categoria assegnata"}}
+                </span>
+                <div>
+                    <span v-for="tag in post.tags" :key="tag.id" class="badge mr-1 text-white"
+                        :style="`background-color: ${tag.color}`">
+                        {{tag.label}}
+                    </span>
+                </div>
+            </div>
     </div>
 </template>
 
