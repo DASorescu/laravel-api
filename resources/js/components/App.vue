@@ -4,7 +4,7 @@
         <main class="container mt-3">
             <ul>
                 <PostsList />
-                </ul>
+            </ul>
         </main>
     </div>
 </template>
