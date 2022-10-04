@@ -1,7 +1,7 @@
 <template>
     <section id="post-list">
         <h2>Posts</h2>
-        <AppLoader v-if="isLoading" />
+        <AppLoader v-if="true" />
         <div v-else>
             <div v-if="posts.length">
                 <PostCard v-for="post in posts" :key="post.id" :post="post" />
