@@ -2624,7 +2624,16 @@ var render = function render() {
     attrs: {
       post: _vm.post
     }
-  }) : _vm._e()], 1);
+  }) : _vm._e(), _vm._v(" "), _c("button", {
+    staticClass: "btn btn-secondary",
+    on: {
+      click: function click($event) {
+        return _vm.$router.back();
+      }
+    }
+  }, [_c("i", {
+    staticClass: "fa-solid fa-arrow-rotate-left"
+  }), _vm._v(" Torna\n        Indietro")])], 1);
 };
 
 var staticRenderFns = [];

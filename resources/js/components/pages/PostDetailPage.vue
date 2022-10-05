@@ -2,6 +2,8 @@
     <div id="detail">
         <AppLoader v-if="isLoading" />
         <PostCard v-else-if="!isLoading && post" :post="post" />
+        <button class="btn btn-secondary" @click="$router.back()"><i class="fa-solid fa-arrow-rotate-left"></i> Torna
+            Indietro</button>
     </div>
 </template>
 
