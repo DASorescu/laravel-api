@@ -1,13 +1,37 @@
 <template>
-    <div id="detail">Dettaglio post</div>
+    <div id="detail">
+        <AppLoader v-if="isLoading" />
+        <PostCard v-else-if="!isLoading && post" :post="post" />
+    </div>
 </template>
 
 <script>
+import AppLoader from '../AppLoader';
+import PostCard from '../posts/PostCard';
 export default {
-    name: 'PostDetailPage'
+    name: "PostDetailPage",
+    components: { AppLoader, PostCard },
+    data: () => ({
+        post: null,
+        isLoading: false,
+    }),
+    methods: {
+        fetchPost() {
+            this.isLoading = true;
+            axios.get('http://127.0.0.1:8000/api/posts/' + this.$route.params.slug)
+                .then((res) => {
+                    this.post = res.data;
+                })
+                .catch((err) => {
+                    console.error(err);
+                })
+                .then(() => {
+                    this.isLoading = false;
+                })
+        }
+    },
+    mounted() {
+        this.fetchPost();
+    }
 }
 </script>
-
-<style>
-
-</style>

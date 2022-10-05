@@ -2069,8 +2069,39 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _AppLoader__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../AppLoader */ "./resources/js/components/AppLoader.vue");
+/* harmony import */ var _posts_PostCard__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../posts/PostCard */ "./resources/js/components/posts/PostCard.vue");
+
+
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: 'PostDetailPage'
+  name: "PostDetailPage",
+  components: {
+    AppLoader: _AppLoader__WEBPACK_IMPORTED_MODULE_0__["default"],
+    PostCard: _posts_PostCard__WEBPACK_IMPORTED_MODULE_1__["default"]
+  },
+  data: function data() {
+    return {
+      post: null,
+      isLoading: false
+    };
+  },
+  methods: {
+    fetchPost: function fetchPost() {
+      var _this = this;
+
+      this.isLoading = true;
+      axios.get('http://127.0.0.1:8000/api/posts/' + this.$route.params.slug).then(function (res) {
+        _this.post = res.data;
+      })["catch"](function (err) {
+        console.error(err);
+      }).then(function () {
+        _this.isLoading = false;
+      });
+    }
+  },
+  mounted: function mounted() {
+    this.fetchPost();
+  }
 });
 
 /***/ }),
@@ -2589,7 +2620,11 @@ var render = function render() {
     attrs: {
       id: "detail"
     }
-  }, [_vm._v("Dettaglio post")]);
+  }, [_vm.isLoading ? _c("AppLoader") : !_vm.isLoading && _vm.post ? _c("PostCard", {
+    attrs: {
+      post: _vm.post
+    }
+  }) : _vm._e()], 1);
 };
 
 var staticRenderFns = [];
@@ -2659,11 +2694,11 @@ var render = function render() {
   return _c("div", {
     staticClass: "card border-primary mb-3"
   }, [_c("div", {
-    staticClass: "card-header"
+    staticClass: "card-header d-flex justify-content-between"
   }, [_c("h5", {
     staticClass: "card-title"
   }, [_vm._v(_vm._s(_vm.post.title))]), _vm._v(" "), _c("router-link", {
-    staticClass: "btn btn-primary",
+    staticClass: "btn btn-primary d-flex align-items-center",
     attrs: {
       to: {
         name: "post-detail",
@@ -2673,8 +2708,8 @@ var render = function render() {
       }
     }
   }, [_c("i", {
-    staticClass: "fa-solid fa-eye"
-  }), _vm._v("Vedi")])], 1), _vm._v(" "), _c("div", {
+    staticClass: "fa-solid fa-eye mx-1"
+  }), _vm._v("Vedi\n        ")])], 1), _vm._v(" "), _c("div", {
     staticClass: "card-body"
   }, [_c("p", {
     staticClass: "card-subtitle mb-2 text-muted"

@@ -1,9 +1,10 @@
 <template>
     <div class="card border-primary mb-3">
-        <div class="card-header">
+        <div class="card-header d-flex justify-content-between">
             <h5 class="card-title">{{post.title}}</h5>
-            <router-link class="btn btn-primary" :to="{name:'post-detail',params:{slug:post.slug}}"><i
-                    class="fa-solid fa-eye"></i>Vedi</router-link>
+            <router-link class="btn btn-primary d-flex align-items-center" :to="{name:'post-detail',params:{slug:post.slug}}">
+                <i class="fa-solid fa-eye mx-1"></i>Vedi
+            </router-link>
             </div>
             <div class="card-body">
             <p class="card-subtitle mb-2 text-muted">Pubblicato il:<strong class="mx-1">{{publishedAt}}</strong></p>
