@@ -30,6 +30,7 @@ class PostSeeder extends Seeder
             $new_post->slug= $slug = Str::slug($new_post->title, '-');
             $new_post->content= $faker->paragraphs(2,true);
             $new_post->image= $faker->imageUrl(150,150);
+            $new_post->is_published = $faker->boolean();
             $new_post->save();
 
             $post_tags = [];
