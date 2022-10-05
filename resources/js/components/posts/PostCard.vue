@@ -1,12 +1,14 @@
 <template>
     <div class="card border-primary mb-3">
-        <div class="card-body">
+        <div class="card-header">
             <h5 class="card-title">{{post.title}}</h5>
+            <router-link class="btn btn-primary" :to="{name:'post-detail',params:{slug:post.slug}}"><i
+                    class="fa-solid fa-eye"></i>Vedi</router-link>
+            </div>
+            <div class="card-body">
             <p class="card-subtitle mb-2 text-muted">Pubblicato il:<strong class="mx-1">{{publishedAt}}</strong></p>
             <p class="card-subtitle mb-2 text-muted">Da:<strong class="mx-1">{{post.user.name}}</strong></p>
             <p class="card-text">{{post.content}}</p>
-            <!-- <a href="#" class="card-link">Card link</a>
-                                                <a href="#" class="card-link">Another link</a> -->
             </div>
             <div class="card-footer d-flex justify-content-between align-items-center bg-info">
                 <span class="badge-pill" :class="`badge-${post.category ? post.category.color : 'light'}`">
